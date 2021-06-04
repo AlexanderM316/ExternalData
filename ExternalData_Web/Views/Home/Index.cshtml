@@ -1,0 +1,30 @@
+﻿@model ExternalData_Web.Models.ViewModel.Organization_OrgRatingVM;
+
+<body>
+    <table id="MainTable" class="Display dt-resposnive table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>INN</th>
+                <th>Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            @try
+            {
+            @foreach (var item in Model.OrgRatings)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                    @*<td>@Model.Organizations.Where(u => u.OID == item.Org_ID).FirstOrDefault()</td>*@
+                    @*<td>@Html.DisplayFor(modelItem => item.INN)</td>*@
+                    <td>@Html.DisplayFor(modelItem => item.Rating)</td>
+                </tr>
+            }}
+            catch { }
+        </tbody>
+    </table>
+</body>
+@section scripts{
+    <script src="~/js/MainTable.js"></script>
+}
