@@ -10,8 +10,7 @@
             </tr>
         </thead>
         <tbody>
-            @try
-            {
+           
             @foreach (var item in Model.OrgRatings)
             {
                 <tr>
@@ -20,8 +19,8 @@
                     @*<td>@Html.DisplayFor(modelItem => item.INN)</td>*@
                     <td>@Html.DisplayFor(modelItem => item.Rating)</td>
                 </tr>
-            }}
-            catch { }
+            }
+          
         </tbody>
     </table>
 </body>

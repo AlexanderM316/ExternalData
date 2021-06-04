@@ -13,6 +13,7 @@ namespace ExternalData.Mapper
         public Mappings()
         {
             CreateMap<OrgRating, OrgRatingDto>().ReverseMap();
+            CreateMap<Organization, OrganizationDto>().ReverseMap();
         }
     }
 }
