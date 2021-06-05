@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using ExternalData.Repository.IRepository;
 using ExternalData.Repository;
 using ExternalData.Mapper;
+using ExternalData.Services;
 
 namespace ExternalData
 {
@@ -38,8 +39,9 @@ namespace ExternalData
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IBackgroundJobClient backgroundJobClient, IRecurringJobManager recurringJobManager)
         {
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -63,6 +65,10 @@ namespace ExternalData
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            backgroundJobClient.Enqueue(() => UpdateService.UpdateDB());
+            recurringJobManager.AddOrUpdate("Update Every One our", () => UpdateService.UpdateDB(), Cron.Hourly);
+
+
         }
     }
 }
