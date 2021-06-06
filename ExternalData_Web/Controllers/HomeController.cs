@@ -45,7 +45,7 @@ namespace ExternalData_Web.Controllers
             orgRating = await _orgRatingRepo.GetAsysnc(APIpath.api + "GetOrgRating?Org_ID=", org_ID);
             return PartialView("Edit",orgRating);
         }
-        public
+        //public
 
         public IActionResult Privacy()
         {
