@@ -30,10 +30,11 @@ namespace ExternalData
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHangfire(x => x.UseSqlServerStorage(@"Data Source=DESKTOP-I4USTCV;Initial Catalog=HangfireDB;Integrated Security=True;Pooling=False"));
+            services.AddHangfire(x => x.UseSqlServerStorage(@"Data Source=DESKTOP-6T8PD0G\SQLEXPRESS;Initial Catalog=HangfireDB;Integrated Security=True;Pooling=False"));
             services.AddHangfireServer();
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OrgDB")));
             services.AddScoped<IOrgRatingRepository, OrgRatingRepository>();
+            services.AddScoped<IOrganizationRepository, OrganizationRepository>();
             services.AddAutoMapper(typeof(Mappings));
             services.AddControllersWithViews();
         }

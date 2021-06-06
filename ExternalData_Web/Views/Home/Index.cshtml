@@ -15,7 +15,10 @@
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.ID)</td>
-                    @*<td>@Model.Organizations.Where(u => u.OID == item.Org_ID).FirstOrDefault()</td>*@
+                    @foreach (var org in Model.Organizations.Where(u => u.OID == item.Org_ID))
+                    {
+                    <td>@Html.DisplayFor(modelItem => org.INN)</td>
+                    }
                     @*<td>@Html.DisplayFor(modelItem => item.INN)</td>*@
                     <td>@Html.DisplayFor(modelItem => item.Rating)</td>
                 </tr>

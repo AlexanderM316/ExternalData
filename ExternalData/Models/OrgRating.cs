@@ -15,7 +15,7 @@ namespace ExternalData.Models
         public int Org_ID { get; set; }
         public decimal Rating { get; set; }
         [ForeignKey("Org_ID")]
-        public Organization organization { get; set; }
+        public Organization Organization { get; set; }
 
     }
 }
