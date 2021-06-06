@@ -1,12 +1,14 @@
 ﻿@model ExternalData_Web.Models.ViewModel.Organization_OrgRatingVM;
 
 <body>
+    <div id="place"></div>
     <table id="MainTable" class="Display dt-resposnive table-striped">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>INN</th>
                 <th>Rating</th>
+                <th>Operations</th>
             </tr>
         </thead>
         <tbody>
@@ -21,7 +23,7 @@
                     }
                     @*<td>@Html.DisplayFor(modelItem => item.INN)</td>*@
                     <td>@Html.DisplayFor(modelItem => item.Rating)</td>
-                    <td><button type="button" class="btn btn-sm"></button></td>
+                    <td><button type="button" class="btn btn-sm" data-toggle="ajax-modal" data-target="#Edit" data-url="@Url.Action($"Upsert?Org_ID={item.Org_ID}")">Edit</button></td>
                 </tr>
             }
           

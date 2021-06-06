@@ -53,7 +53,7 @@ namespace ExternalData.Controllers
             return Ok(objDto);
         }
 
-        [HttpGet("ByOrg_ID")]
+        [HttpGet("Org_ID")]
         [Route("[action]")]
         public IActionResult GetOrgRating(int Org_ID)
         {

@@ -1,0 +1,25 @@
+﻿@model ExternalData_Web.Models.OrgRating
+
+<hr />
+<div class="modal fade" id="Edit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form asp-action="Upsert">
+                    <div class="form-group">
+                        <label asp-for="ID" class="control-label"> ID</label>
+                        <input asp-for="ID" class="form-control" disabled />
+                        <label asp-for="Rating" class="control-label"> Rating</label>
+                        <input asp-for="Rating" class="form-control" />
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a asp-action="Index" style="float:left">Dismiss</a>
+                <button type="button" class="btn btn-success" style="float:right" data-save="modal">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+

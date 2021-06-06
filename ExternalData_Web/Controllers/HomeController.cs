@@ -37,10 +37,15 @@ namespace ExternalData_Web.Controllers
             };
             return View(organization_OrgRatings);
         }
-        //public IActionResult Upsert(int ? id)
-        //{
-
-        //}
+        [HttpGet]
+        
+        public async Task<IActionResult> Upsert(int org_ID)
+        {
+            OrgRating orgRating = new OrgRating();
+            orgRating = await _orgRatingRepo.GetAsysnc(APIpath.api + "GetOrgRating?Org_ID=", org_ID);
+            return PartialView("Edit",orgRating);
+        }
+        public
 
         public IActionResult Privacy()
         {
