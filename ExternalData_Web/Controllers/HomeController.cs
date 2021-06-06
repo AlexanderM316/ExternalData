@@ -37,6 +37,10 @@ namespace ExternalData_Web.Controllers
             };
             return View(organization_OrgRatings);
         }
+        //public IActionResult Upsert(int ? id)
+        //{
+
+        //}
 
         public IActionResult Privacy()
         {
