@@ -106,19 +106,19 @@ namespace ExternalData.Controllers
             }
             return NoContent();
         }
-        [HttpPost]
-        [Route("[action]")]
-        public IActionResult ImportData()
-        {
-            try
-            {
-                UpdateService.UpdateDB();
-                return Ok("DB updated");
-            }
-            catch (Exception e)
-            {
-                return Ok(e);
-            }
-        }
+        //[HttpPost]
+        //[Route("[action]")]
+        //public IActionResult ImportData()
+        //{
+        //    try
+        //    {
+        //        UpdateService.UpdateDB();
+        //        return Ok("DB updated");
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return Ok(e);
+        //    }
+        //}
     }
 }

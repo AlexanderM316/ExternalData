@@ -6,89 +6,124 @@ using System.Net;
 using System.Threading.Tasks;
 using ExternalData.Models;
 using ExternalData.Repository;
+using ExternalData.Repository.IRepository;
 
 namespace ExternalData.Services
 {
     public class UpdateService
     {
-        public static string GetCSV()
-        {
-            string url = "CSVfile.csv";//"Http://example.csv";
 
+        public IOrgRatingRepository _orgRatingRepo;
+        public IOrganizationRepository _organization;
+        public UpdateService(IOrgRatingRepository orgRatingRepository, IOrganizationRepository organizationRepository )
+        {
+            _orgRatingRepo = orgRatingRepository;
+            _organization = organizationRepository;
+        }
+        public async Task UpdateDB()
+        {
+            
+            
+            string url = "Http://example.csv";//"Http://example.csv";
+
+            
+                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
             try
             {
-                HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
                 HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
-
-                StreamReader sr = new StreamReader(resp.GetResponseStream());
-                using (var reader = new StreamReader(url))
+                if (!(resp == null))
                 {
                     List<OrgRating> orgRatings = new List<OrgRating>();
                     List<Organization> organizations = new List<Organization>();
-                    while (!reader.EndOfStream)
+                    StreamReader sr = new StreamReader(resp.GetResponseStream());
+                    using (var reader = new StreamReader(url))
                     {
-                        Organization organization = new Organization();
-                        OrgRating orgRating = new OrgRating();
-                        var line = reader.ReadLine();
-                        var values = line.Split(';');
 
-                        organization.INN = double.Parse(values[0]);
-                        orgRating.Rating = decimal.Parse(values[1]);
-                        organizations.Add(organization);
-                        orgRatings.Add(orgRating);
+                        while (!reader.EndOfStream)
+                        {
+                            Organization organization = new Organization();
+                            OrgRating orgRating = new OrgRating();
+                            var line = reader.ReadLine();
+                            var values = line.Split(';');
+
+                            organization.INN = double.Parse(values[0]);
+                            orgRating.Rating = decimal.Parse(values[1]);
+                            organizations.Add(organization);
+                            orgRatings.Add(orgRating);
+                        }
+                        //foreach (Organization org in organizations)
+                        //{
+                        //    if (!(RepositoryOrganization. == null))
+                        //    {
+
+                        //    }
+                        //}
                     }
-                    //foreach (Organization org in organizations)
-                    //{
-                    //    if (!(RepositoryOrganization. == null))
-                    //    {
-
-                    //    }
-                    //}
-                }
-                string results = sr.ReadToEnd();
-                sr.Close();
-
-                return null;//incomplete set for testing only
-            }
-            catch(Exception e)
-            {
-                return null; //incomplete set for testing only
-            }
-        }
-        public static List<string> SplitCSV()
-        {
-            List<string> splitted = new List<string>();
-            string file = GetCSV();
-            
-            try
-            {
-                string[] tempStr;
-
-                tempStr = file.Split(';');
-
-                foreach (string item in tempStr)
-                {
-                    if (!string.IsNullOrWhiteSpace(item))
+                    string results = sr.ReadToEnd();
+                    sr.Close();
+                    foreach (Organization org in organizations)
                     {
-                        splitted.Add(item);
+                        if (_organization.OrganizationExists(org.INN))
+                        {
+                            var orgObj = _organization.GetOrganizationByINN(org.INN);
+                            var orgRating = _orgRatingRepo.GetOrgRating(orgObj.OID);
+                            _orgRatingRepo.UpdateOrgRating(orgRating);
+                        }
                     }
-                }
-                return splitted;
-            }
-            catch (Exception e){  return null; }//incomplete set for testing only
-        }
-        public static void UpdateDB()
-        {
-            //List<OrgRating> orgRatings = new List<OrgRating>();
-            //List<Organization> organizations = new List<Organization>();
 
-            //List<string> data = SplitCSV();
-            //foreach(string d in data)
-            //{
-            //    Organization organization = new Organization();
-            //    OrgRating orgRating = new OrgRating();
-                
-            //}                  // This is still incomplete needs more work before enabling otherwise it will crash 
+                }
+            }
+            catch(Exception e) { throw new InvalidOperationException(e.ToString()); }
+             
         }
+        //public static List<string> SplitCSV()
+        //{
+        //    List<string> splitted = new List<string>();
+        //    string file = GetCSV();
+        //    if (!(file == null))
+        //    {
+
+
+
+        //            string[] tempStr;
+
+        //            tempStr = file.Split(';');
+
+        //            foreach (string item in tempStr)
+        //            {
+        //                if (!string.IsNullOrWhiteSpace(item))
+        //                {
+        //                    splitted.Add(item);
+        //                }
+        //            }
+        //            return splitted;
+
+        //    }
+        //    else
+        //    {
+        //        return null;
+        //    }
+        //}
+        //public static void UpdateDB()
+        //{
+
+        //    UpdateService updateService = new UpdateService(orgRatingRepo, )
+        //}
+        //    List<OrgRating> orgRatings = new List<OrgRating>();
+        //    List<Organization> organizations = new List<Organization>();
+
+        //    List<string> data = SplitCSV();
+        //    if (!(data == null))
+        //    {
+        //        foreach(string d in data)
+        //        {
+        //            Organization organization = new Organization();
+        //            OrgRating orgRating = new OrgRating();
+        //            firstSixColumns.AddRange(fileLineParts.Take(6));  // Add the first 6 entries
+        //            restOfColumns.AddRange(fileLineParts.Skip(6));    // Add the rest of the entries
+
+        //        }                  // This is still incomplete needs more work before enabling otherwise it will crash 
+        //    }
+        //}
     }
 }

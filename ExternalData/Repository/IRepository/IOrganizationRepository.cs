@@ -11,7 +11,8 @@ namespace ExternalData.Repository.IRepository
         ICollection<Organization> GetOrganizations();
 
         Organization GetOrganization(int OID);
-        bool OrganizationExists(int ID);
+        Organization GetOrganizationByINN(double INN);
+        bool OrganizationExists(double inn);
         bool CreateOrganization(Organization organization);
         bool UpdateOrganization(Organization organization);
         bool DeleteOrganization(Organization organization);

@@ -38,9 +38,13 @@ namespace ExternalData.Repository
             return _db.Organization.OrderBy(a => a.OID).ToList();
         }
 
-        public bool OrganizationExists(int ID)
+        public bool OrganizationExists(double INN)
         {
-            return _db.Organization.Any(a => a.OID == ID);
+            return _db.Organization.Any(a => a.INN == INN);
+        }
+        public Organization GetOrganizationByINN(double inn)
+        {
+            return _db.Organization.FirstOrDefault(a => a.INN == inn);
         }
 
         public bool Save()

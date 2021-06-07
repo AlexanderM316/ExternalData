@@ -37,6 +37,7 @@ namespace ExternalData
             services.AddScoped<IOrganizationRepository, OrganizationRepository>();
             services.AddAutoMapper(typeof(Mappings));
             services.AddControllersWithViews();
+       
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,8 +67,11 @@ namespace ExternalData
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-            backgroundJobClient.Enqueue(() => UpdateService.UpdateDB());
-            recurringJobManager.AddOrUpdate("Update Every One our", () => UpdateService.UpdateDB(), Cron.Hourly);
+            IOrganizationRepository organization = null;
+            IOrgRatingRepository orgRatingRepo = null;
+            UpdateService updateService = new UpdateService(orgRatingRepo, organization);
+            backgroundJobClient.Enqueue(() => updateService.UpdateDB());
+            recurringJobManager.AddOrUpdate("Update Every One hour", () => updateService.UpdateDB(), Cron.Hourly);
 
 
         }
