@@ -45,7 +45,12 @@ namespace ExternalData_Web.Controllers
             orgRating = await _orgRatingRepo.GetAsysnc(APIpath.api + "GetOrgRating?Org_ID=", org_ID);
             return PartialView("Edit",orgRating);
         }
-        //public
+        [HttpPost]
+        public async Task<IActionResult> Upsert(OrgRating orgRating)
+        {
+            await _orgRatingRepo.UpdateAsync(APIpath.api + "UpdateOrgRating?Org_ID=" + orgRating.Org_ID, orgRating);
+            return PartialView("Edit", orgRating);
+        }
 
         public IActionResult Privacy()
         {

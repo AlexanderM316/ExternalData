@@ -8,9 +8,10 @@
                 <form asp-action="Upsert">
                     <div class="form-group">
                         <label asp-for="ID" class="control-label"> ID</label>
-                        <input asp-for="ID" class="form-control" disabled />
+                        <input asp-for="ID" class="form-control" hidden />
                         <label asp-for="Rating" class="control-label"> Rating</label>
                         <input asp-for="Rating" class="form-control" />
+                        <input asp-for="Org_ID" class="form-control" hidden />
                     </div>
 
                 </form>

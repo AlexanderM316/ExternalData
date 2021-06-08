@@ -91,7 +91,8 @@ namespace ExternalData.Controllers
             }
             return Ok();
         }
-        [HttpPatch("ByOrg_ID")]
+        [HttpPatch]
+        [Route("[action]")]
         public IActionResult UpdateOrgRating(int Org_ID, [FromBody] OrgRatingDto orgRatingDto)
         {
             if (orgRatingDto == null || !(Org_ID==orgRatingDto.Org_ID))
