@@ -46,9 +46,12 @@ namespace ExternalData.Services
                             var line = reader.ReadLine();
                             var values = line.Split(';');
 
-                            organization.INN = double.Parse(values[0]);
+                            orgRating.Organization.INN = double.Parse(values[0]);
                             orgRating.Rating = decimal.Parse(values[1]);
-                            organizations.Add(organization);
+                            //organization.INN = double.Parse(values[0]);
+                            //orgRating.Rating = decimal.Parse(values[1]);
+                            //organizations.Add(organization);
+                            
                             orgRatings.Add(orgRating);
                         }
                         //foreach (Organization org in organizations)
@@ -61,13 +64,24 @@ namespace ExternalData.Services
                     }
                     string results = sr.ReadToEnd();
                     sr.Close();
-                    foreach (Organization org in organizations)
+                    foreach (OrgRating orgR in orgRatings)
                     {
-                        if (_organization.OrganizationExists(org.INN))
+                        if (_organization.OrganizationExists(orgR.Organization.INN))
                         {
-                            var orgObj = _organization.GetOrganizationByINN(org.INN);
+                            var orgObj = _organization.GetOrganizationByINN(orgR.Organization.INN);
                             var orgRating = _orgRatingRepo.GetOrgRating(orgObj.OID);
+                            orgRating.Rating = orgR.Rating;
+                         
+                            
                             _orgRatingRepo.UpdateOrgRating(orgRating);
+                        }
+                        else //if organization doesn't exist
+                        {
+                             _organization.CreateOrganization(orgR.Organization);
+                            var orgObj = _organization.GetOrganizationByINN(orgR.Organization.INN);
+                            var orgRating = _orgRatingRepo.GetOrgRating(orgObj.OID);
+                            orgRating.Rating = orgR.Rating;
+                            _orgRatingRepo.CreateOrgRating(orgRating);
                         }
                     }
 
